@@ -1,0 +1,31 @@
+{
+  "name": "dmi-viewer",
+  "displayName": "DMI Viewer",
+  "description": "Chrome extension to view DMI files on browser & GitHub",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-replace": "^5.0.5",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/bun": "latest",
+    "@types/chrome": "^0.0.266",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
+    "rollup": "^4.16.4",
+    "rollup-plugin-chrome-extension": "^3.6.12",
+    "rollup-plugin-empty-dir": "^1.0.5"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
