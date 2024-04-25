@@ -27,5 +27,6 @@ export default {
 			all_frames: true,
 		},
 	],
-	web_accessible_resources: ['pages/viewer/index.html'],
+	web_accessible_resources: ['pages/*/index.html', '*.wasm'],
+	content_security_policy: "script-src 'self' 'wasm-eval'; object-src 'self'"
 } satisfies chrome.runtime.ManifestV2;

@@ -38,7 +38,7 @@ function modifyHeaders(
 ): chrome.webRequest.HttpHeader[] {
 	return headers.map((header) => {
 		if (header.name.toLowerCase() === HEADER_CONTENT_TYPE.toLowerCase()) {
-			return { name: HEADER_CONTENT_TYPE, value: 'text/html' };
+			return { name: HEADER_CONTENT_TYPE, value: 'image/png' };
 		}
 
 		return header;
@@ -70,3 +70,13 @@ chrome.webRequest.onHeadersReceived.addListener(
 	{ urls: ['*://*/*'] },
 	['responseHeaders', 'blocking', 'extraHeaders']
 );
+
+import initWasm, { greet } from '../wasm/pkg';
+import '../wasm/pkg/wasm_bg.wasm';
+
+async function wasmMain() {
+	await initWasm();
+	greet('ahh');
+}
+
+wasmMain();

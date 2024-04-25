@@ -9,11 +9,12 @@ import {
 } from 'rollup-plugin-chrome-extension';
 import { emptyDir } from 'rollup-plugin-empty-dir';
 import replace from '@rollup/plugin-replace';
+import wasm from '@rollup/plugin-wasm';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 export default {
-	input: 'src/manifest.ts',
+	input: 'extension/manifest.ts',
 	output: {
 		dir: 'dist',
 		format: 'esm',
@@ -32,6 +33,7 @@ export default {
 		resolve(),
 		commonjs(),
 		typescript(),
+		wasm({ targetEnv: 'browser', fileName: '[name][extname]' }),
 		// Empties the output dir before a new build
 		emptyDir(),
 	],

@@ -5,10 +5,8 @@ if (url.pathname.endsWith('.dmi') && url.searchParams.has('view')) {
 
 	if (fileName && fileName.length > 0) {
 		document.title = fileName;
-		document.body.innerHTML = `<span>${fileName}</span>`;
 
 		url.searchParams.delete('view');
-
 		history.replaceState({}, '', url.pathname + url.search);
 	}
 }
