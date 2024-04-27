@@ -11,7 +11,7 @@ export default {
     '<all_urls>',
 	],
 	background: {
-		scripts: ['background.ts'],
+		scripts: ['background/index.ts'],
 	},
 	content_scripts: [
 		{
@@ -27,6 +27,6 @@ export default {
 			all_frames: true,
 		},
 	],
-	web_accessible_resources: ['pages/*/index.html', '*.wasm'],
+	web_accessible_resources: ['*.wasm'],
 	content_security_policy: "script-src 'self' 'wasm-eval'; object-src 'self'"
 } satisfies chrome.runtime.ManifestV2;

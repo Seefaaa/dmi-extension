@@ -45,7 +45,7 @@ function modifyHeaders(
 	});
 }
 
-function onHeadersReceived(
+export function onHeadersReceived(
 	details: chrome.webRequest.WebResponseHeadersDetails
 ): chrome.webRequest.BlockingResponse | void {
 	if (details.responseHeaders !== undefined) {
@@ -64,19 +64,3 @@ function onHeadersReceived(
 		}
 	}
 }
-
-chrome.webRequest.onHeadersReceived.addListener(
-	onHeadersReceived,
-	{ urls: ['*://*/*'] },
-	['responseHeaders', 'blocking', 'extraHeaders']
-);
-
-import initWasm, { greet } from '../wasm/pkg';
-import '../wasm/pkg/wasm_bg.wasm';
-
-async function wasmMain() {
-	await initWasm();
-	greet('ahh');
-}
-
-wasmMain();

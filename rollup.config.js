@@ -31,9 +31,9 @@ export default {
 		// Adds a Chrome extension reloader during watch mode
 		simpleReloader(),
 		resolve(),
-		commonjs(),
+		// commonjs(),
 		typescript(),
-		wasm({ targetEnv: 'browser', fileName: '[name][extname]' }),
+		wasm({ targetEnv: 'browser', fileName: 'background/[name][extname]' }),
 		// Empties the output dir before a new build
 		emptyDir(),
 	],
