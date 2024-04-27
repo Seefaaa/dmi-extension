@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "rollup -c",
+    "build:wasm": "cd wasm && wasm-pack build --target web",
     "watch": "rollup -c -w"
   },
   "dependencies": {
