@@ -19,6 +19,16 @@ export type State = {
 
 declare global {
 	interface Window {
-		dmi: Dmi | {};
+		dmi: Dmi;
+	}
+
+	module '*.html' {
+		const content: string;
+		export default content;
+	}
+
+	module '*.css' {
+		const content: string;
+		export default content;
 	}
 }

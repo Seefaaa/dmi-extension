@@ -1,0 +1,37 @@
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+#root > div {
+	display: flex;
+	flex-wrap: wrap;
+	image-rendering: pixelated;
+	color: white;
+	font-family: sans-serif;
+}
+
+#root > div > div {
+	margin: 8px;
+	display: flex;
+	flex-direction: column;
+}
+
+#root > div > div > img {
+	margin-bottom: 8px;
+	user-select: none;
+}
+
+#root > div > div > span {
+	text-overflow: ellipsis;
+	text-wrap: nowrap;
+	overflow: hidden;
+	font-size: x-small;
+}

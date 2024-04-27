@@ -10,6 +10,7 @@ import {
 import { emptyDir } from 'rollup-plugin-empty-dir';
 import replace from '@rollup/plugin-replace';
 import wasm from '@rollup/plugin-wasm';
+import css from 'rollup-plugin-import-css'
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -27,11 +28,12 @@ export default {
 				: JSON.stringify('development'),
 			preventAssignment: true,
 		}),
+		css(),
 		chromeExtension(),
 		// Adds a Chrome extension reloader during watch mode
 		simpleReloader(),
 		resolve(),
-		// commonjs(),
+		commonjs(),
 		typescript(),
 		wasm({ targetEnv: 'browser', fileName: 'background/[name][extname]' }),
 		// Empties the output dir before a new build

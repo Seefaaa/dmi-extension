@@ -1,29 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 export default function App() {
-	const [fileUrl, setFileUrl] = useState<string | null>(null);
-
-	useEffect(() => {
-		const url = decodeURIComponent(location.href.split('?=')[1]);
-
-		history.replaceState({}, '', '/');
-
-		if (url.length === 0) {
-			window.close();
-			return;
-		}
-
-		const filename = url.split('/').pop();
-
-		if (filename === undefined) {
-			window.close();
-			return;
-		}
-
-		document.title = filename;
-
-		setFileUrl(url);
-	}, []);
-
-	return <div>{fileUrl}</div>;
+	return (
+		<div>
+			{window.dmi.states.map((state, index) => (
+				<div key={index} title={state.name} >
+					{state.frames.length > 0 ? (
+						<img src={state.frames[0]} />
+					) : (
+						<div style={{ width: window.dmi.width, height: window.dmi.height }} />
+					)}
+					<span style={{ maxWidth: window.dmi.width }}>{state.name}</span>
+				</div>
+			))}
+		</div>
+	);
 }
