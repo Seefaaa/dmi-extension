@@ -10,7 +10,7 @@ import {
 import { emptyDir } from 'rollup-plugin-empty-dir';
 import replace from '@rollup/plugin-replace';
 import wasm from '@rollup/plugin-wasm';
-import css from 'rollup-plugin-import-css'
+import css from 'rollup-plugin-import-css';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -30,8 +30,6 @@ export default {
 		}),
 		css(),
 		chromeExtension(),
-		// Adds a Chrome extension reloader during watch mode
-		simpleReloader(),
 		resolve(),
 		commonjs(),
 		typescript(),

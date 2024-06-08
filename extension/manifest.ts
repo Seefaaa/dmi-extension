@@ -3,30 +3,19 @@ import { displayName, description, version } from '../package.json';
 export default {
 	manifest_version: 2,
 	name: displayName,
-  description,
+	description,
 	version,
-	permissions: [
-		'webRequest',
-		'webRequestBlocking',
-    '<all_urls>',
-	],
+	permissions: ['webRequest', 'webRequestBlocking', 'activeTab', '<all_urls>'],
 	background: {
-		scripts: ['background/index.ts'],
+		scripts: ['background/index.ts', 'background/onHeadersReceived.ts'],
+		persistent: true,
 	},
 	content_scripts: [
 		{
-			matches: ['http://github.com/*', 'https://github.com/*'],
-			run_at: 'document_start',
-			js: ['content/github.ts'],
-			all_frames: true,
-		},
-		{
-			matches: ['*://*/*'],
-			run_at: 'document_start',
 			js: ['content/file.ts'],
-			all_frames: true,
+			matches: ['*://*/*.dmi'],
 		},
 	],
 	web_accessible_resources: ['*.wasm'],
-	content_security_policy: "script-src 'self' 'wasm-eval'; object-src 'self'"
+	content_security_policy: "script-src 'self' 'wasm-unsafe-eval'",
 } satisfies chrome.runtime.ManifestV2;

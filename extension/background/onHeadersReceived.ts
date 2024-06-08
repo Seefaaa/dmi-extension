@@ -3,8 +3,46 @@ const MIME_TYPES = [
 	'application/force-download',
 	'binary/octet-stream',
 ];
-const DMI_EXTENSION = '.dmi';
-const HEADER_CONTENT_TYPE = 'Content-Type';
+
+export function onHeadersReceived(
+	details: chrome.webRequest.WebResponseHeadersDetails
+): chrome.webRequest.BlockingResponse | void {
+	if (details.tabId !== -1) {
+		if (details.responseHeaders && isDmi(details)) {
+			setHeader(details.responseHeaders, 'Content-Type', 'image/png');
+			setHeader(details.responseHeaders, 'Content-Security-Policy', '');
+
+			// chrome.tabs.executeScript(
+			// 	details.tabId,
+			// 	{
+			// 		file: chrome.runtime.getURL('../content/file.ts'),
+			// 		runAt: 'document_start',
+			// 	},
+			// 	(result) => {
+			// 		chrome.tabs.sendMessage(details.tabId, 'hello from background!');
+			// 	}
+			// );
+
+			return {
+				responseHeaders: details.responseHeaders,
+			};
+		}
+	}
+}
+
+function isDmi(details: chrome.webRequest.WebResponseHeadersDetails): boolean {
+	const contentType = getHeader(details.responseHeaders!, 'Content-Type');
+
+	if (
+		contentType?.value &&
+		MIME_TYPES.includes(contentType.value) &&
+		details.url.split('?')[0].endsWith('.dmi')
+	) {
+		return true;
+	}
+
+	return false;
+}
 
 function getHeader(
 	headers: chrome.webRequest.HttpHeader[],
@@ -15,52 +53,22 @@ function getHeader(
 	);
 }
 
-function isDMI(url: string, headers: chrome.webRequest.HttpHeader[]): boolean {
-	const contentType = getHeader(headers, HEADER_CONTENT_TYPE)!;
+function setHeader(
+	headers: chrome.webRequest.HttpHeader[],
+	name: string,
+	value: string
+): void {
+	const header = getHeader(headers, name);
 
-	if (contentType.value === undefined) {
-		return false;
-	}
-
-	if (!MIME_TYPES.includes(contentType.value)) {
-		return false;
-	}
-
-	if (!url.split('?')[0].endsWith(DMI_EXTENSION)) {
-		return false;
-	}
-
-	return true;
-}
-
-function modifyHeaders(
-	headers: chrome.webRequest.HttpHeader[]
-): chrome.webRequest.HttpHeader[] {
-	return headers.map((header) => {
-		if (header.name.toLowerCase() === HEADER_CONTENT_TYPE.toLowerCase()) {
-			return { name: HEADER_CONTENT_TYPE, value: 'image/png' };
-		}
-
-		return header;
-	});
-}
-
-export function onHeadersReceived(
-	details: chrome.webRequest.WebResponseHeadersDetails
-): chrome.webRequest.BlockingResponse | void {
-	if (details.responseHeaders !== undefined) {
-		if (isDMI(details.url, details.responseHeaders)) {
-			const url = new URL(details.url);
-			if (!url.searchParams.has('view')) {
-				url.searchParams.set('view', '');
-				return {
-					redirectUrl: url.toString(),
-				};
-			} else {
-				return {
-					responseHeaders: modifyHeaders(details.responseHeaders),
-				};
-			}
-		}
+	if (header) {
+		header.value = value;
+	} else {
+		headers.push({ name, value });
 	}
 }
+
+chrome.webRequest.onHeadersReceived.addListener(
+	onHeadersReceived,
+	{ urls: ['<all_urls>'], types: ['main_frame'] },
+	['responseHeaders', 'blocking']
+);

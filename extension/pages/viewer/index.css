@@ -1,37 +1,65 @@
-::-webkit-scrollbar {
-  width: 4px;
-}
+:root {
+	scrollbar-color: #404040 #202020;
+	scrollbar-width: thin;
 
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
+	image-rendering: pixelated;
 
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+	color: white;
+	font-size: small;
+	font-family: sans-serif;
 }
 
 #root > div {
 	display: flex;
 	flex-wrap: wrap;
-	image-rendering: pixelated;
-	color: white;
-	font-family: sans-serif;
+
+	--margin: 8px;
+	--line-height: 18px;
+	--width: calc(var(--dmi-size) * var(--scale));
 }
 
 #root > div > div {
-	margin: 8px;
+	padding: 8px;
+
+	border: 1px dashed #0000008a;
+
+	flex: 1;
+	min-width: calc(var(--width) + var(--line-height) + var(--margin));
+
 	display: flex;
+	align-items: center;
 	flex-direction: column;
 }
 
+#root > div > div:hover {
+	background: #0000003a;
+}
+
+#root > div > div[no-name] {
+	font-style: italic;
+	color: #f9f952;
+}
+
+#root > div > div[duplicate] {
+	color: tomato;
+}
+
 #root > div > div > img {
-	margin-bottom: 8px;
+	margin: unset; /* browser */
+	position: unset; /* browser */
+
 	user-select: none;
+
+	width: var(--width);
 }
 
 #root > div > div > span {
+	margin-top: var(--margin);
+	max-width: 100%;
+
+	line-height: var(--line-height);
+
 	text-overflow: ellipsis;
 	text-wrap: nowrap;
 	overflow: hidden;
-	font-size: x-small;
 }
