@@ -9,13 +9,14 @@
 	font-family: sans-serif;
 }
 
+#root {
+	width: 100vw;
+	height: 100vh;
+}
+
 #root > div {
 	display: flex;
 	flex-wrap: wrap;
-
-	--margin: 8px;
-	--line-height: 18px;
-	--width: calc(var(--dmi-size) * var(--scale));
 }
 
 #root > div > div {
@@ -23,12 +24,13 @@
 
 	border: 1px dashed #0000008a;
 
-	flex: 1;
-	min-width: calc(var(--width) + var(--line-height) + var(--margin));
+	width: var(--box-size);
+	aspect-ratio: 1 / 1;
 
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+	justify-content: space-between;
 }
 
 #root > div > div:hover {
@@ -44,20 +46,20 @@
 	color: tomato;
 }
 
-#root > div > div > img {
+#root > div > div > img,
+#root > div > div > div {
 	margin: unset; /* browser */
 	position: unset; /* browser */
 
 	user-select: none;
 
-	width: var(--width);
+	width: calc(var(--dmi-size) * var(--scale));
 }
 
 #root > div > div > span {
-	margin-top: var(--margin);
 	max-width: 100%;
 
-	line-height: var(--line-height);
+	line-height: 18px;
 
 	text-overflow: ellipsis;
 	text-wrap: nowrap;

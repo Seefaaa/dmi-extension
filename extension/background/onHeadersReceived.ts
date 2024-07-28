@@ -12,17 +12,6 @@ export function onHeadersReceived(
 			setHeader(details.responseHeaders, 'Content-Type', 'image/png');
 			setHeader(details.responseHeaders, 'Content-Security-Policy', '');
 
-			// chrome.tabs.executeScript(
-			// 	details.tabId,
-			// 	{
-			// 		file: chrome.runtime.getURL('../content/file.ts'),
-			// 		runAt: 'document_start',
-			// 	},
-			// 	(result) => {
-			// 		chrome.tabs.sendMessage(details.tabId, 'hello from background!');
-			// 	}
-			// );
-
 			return {
 				responseHeaders: details.responseHeaders,
 			};
